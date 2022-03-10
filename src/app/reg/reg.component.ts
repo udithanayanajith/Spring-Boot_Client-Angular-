@@ -14,7 +14,7 @@ import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 export class RegComponent implements OnInit {
   regForm: any = FormGroup;
   actionBtn: string = "Save";
-  con: string="";
+  con: string = "";
   public getEditDta: any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
@@ -38,20 +38,14 @@ export class RegComponent implements OnInit {
   reg() {
     if (!this.getEditDta) {
       if (this.regForm.valid) {
+        this.http.post<any>("http://localhost:8080/api/v1/employees", this.regForm.value).subscribe(res => {
+          alert("Registration Succussed");
+          this.regForm.reset();
+          this.router.navigate(['view']);
+        }, err => {
+          alert("Data not submitted")
+        })
 
-        // if (!this.regForm.value.contact.length== 10) {
-        //   alert(this.regForm.value.contact);
-        // }
-        //alert(con=this.regForm.value.contact);
-
-          this.http.post<any>("http://localhost:8080/api/v1/employees", this.regForm.value).subscribe(res => {
-            alert("Registration Succussed");
-            this.regForm.reset();
-            this.router.navigate(['view']);
-          }, err => {
-            alert("Data not submitted")
-          })
-        
       }
     }
     else {

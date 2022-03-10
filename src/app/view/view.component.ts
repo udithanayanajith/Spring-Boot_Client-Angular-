@@ -11,30 +11,33 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ViewComponent implements OnInit {
 
-  items:any;
-  private sendEditdata:any; 
+  items: any;
+  private sendEditdata: any;
 
 
-  constructor(private http:HttpClient,private router: Router, private route:ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  let response=this.http.get("http://localhost:8080/api/v1/employees");
-      response.subscribe((data)=>{
-        this.items=data
-        console.log(data,"data");
-    
-    },err=>{
+    //Get all details
+    let response = this.http.get("http://localhost:8080/api/v1/employees");
+    response.subscribe((data) => {
+      this.items = data
+      console.log(data, "data");
+
+    }, err => {
       alert("Error while fectching data");
       console.log(err);
     });
 
 
   }
-  deleteEmp(empID:any){
-    let deleteEmp=this.http.delete("http://localhost:8080/api/v1/employees/"+empID).subscribe(deleteEmp => {
-      alert("Succussfully Deleted : ID is"+ empID);
-      this.router.routeReuseStrategy.shouldReuseRoute=()=>false;
-      this.router.onSameUrlNavigation="reload";
+
+  //delete by id
+  deleteEmp(empID: any) {
+    let deleteEmp = this.http.delete("http://localhost:8080/api/v1/employees/" + empID).subscribe(deleteEmp => {
+      alert("Succussfully Deleted : ID is" + empID);
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = "reload";
       this.router.navigate(['']);
     }, err => {
       alert("Data not Deleted");
@@ -43,9 +46,9 @@ export class ViewComponent implements OnInit {
 
 
   }
-
-  editEmp(editData:any){
-    this.router.navigate(['reg'],{state:{editData}});
+//send data to reg from to load data
+  editEmp(editData: any) {
+    this.router.navigate(['reg'], { state: { editData } });
   }
 
 }
