@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Component({
   selector: 'app-view',
@@ -10,10 +12,10 @@ import { Component, OnInit } from '@angular/core';
 export class ViewComponent implements OnInit {
 
   items:any;
+  private sendEditdata:any; 
 
-  
 
-  constructor(private http:HttpClient,private router: Router) { }
+  constructor(private http:HttpClient,private router: Router, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
   let response=this.http.get("http://localhost:8080/api/v1/employees");
@@ -24,12 +26,15 @@ export class ViewComponent implements OnInit {
     },err=>{
       alert("Error while fectching data");
       console.log(err);
-    })
+    });
+
 
   }
   deleteEmp(empID:any){
     let deleteEmp=this.http.delete("http://localhost:8080/api/v1/employees/"+empID).subscribe(deleteEmp => {
       alert("Succussfully Deleted : ID is"+ empID);
+      this.router.routeReuseStrategy.shouldReuseRoute=()=>false;
+      this.router.onSameUrlNavigation="reload";
       this.router.navigate(['']);
     }, err => {
       alert("Data not Deleted");
@@ -37,6 +42,10 @@ export class ViewComponent implements OnInit {
     })
 
 
+  }
+
+  editEmp(editData:any){
+    this.router.navigate(['reg'],{state:{editData}});
   }
 
 }

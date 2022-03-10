@@ -73,18 +73,19 @@
       <h1>Register</h1>
       <p>Please fill in this form to create an account.</p>
       <hr>
+      <div >
+        <label for="name"><b>Name</b></label>
+        <input formControlName="name" type="text"  placeholder="Enter Name" name="name" id="name" required>
 
-      <label for="name"><b>Name</b></label>
-      <input formControlName="name"  type="text" placeholder="Enter Name" name="name" id="name" required>
+        <label for="address"><b>Address</b></label>
+        <input formControlName="address" type="text" placeholder="Enter Address" name="address" id="address" required>
 
-      <label for="address"><b>Address</b></label>
-      <input formControlName="address" type="text" placeholder="Enter Address" name="address" id="address" required>
+        <label for="contact"><b>Contact</b></label>
+        <input formControlName="contact" type="number" onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;"  placeholder="Contact" name="contact" id="contact" required>
+        <hr>
 
-      <label for="contact"><b>Repeat Password</b></label>
-      <input formControlName="contact" type="number" placeholder="Contact" name="contact" id="contact" required>
-      <hr>
-
-      <button type="submit" class="registerbtn">Register</button>
+        <button type="submit" class="registerbtn">{{actionBtn}}</button>
+      </div>
     </div>
   </form>
 </div>
