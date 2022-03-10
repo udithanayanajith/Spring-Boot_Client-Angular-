@@ -21,6 +21,9 @@ export class ViewComponent implements OnInit {
         this.items=data
         console.log(data,"data");
     
+    },err=>{
+      alert("Error while fectching data");
+      console.log(err);
     })
 
   }
@@ -29,7 +32,8 @@ export class ViewComponent implements OnInit {
       alert("Succussfully Deleted : ID is"+ empID);
       this.router.navigate(['']);
     }, err => {
-      alert("Data not Deleted")
+      alert("Data not Deleted");
+      console.log(err);
     })
 
 
